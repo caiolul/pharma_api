@@ -7,10 +7,10 @@ def get_fornecedores(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.Fornecedor).offset(skip).limit(limit).all()
 
 
-def get_fornecedor(db: Session, forcenedor_id: int):
+def get_fornecedor(db: Session, fornecedor_id: int):
     return (
         db.query(models.Fornecedor)
-        .filter(models.Fornecedor.id == forcenedor_id)
+        .filter(models.Fornecedor.id == fornecedor_id)
         .first()
     )
 
@@ -24,9 +24,9 @@ def create_fornecedor(db: Session, fornecedor: schema.FornecedorCreate):
 
 
 def update_fornecedor(
-    db: Session, forcenedor_id: int, fornecedor: schema.FornecedorCreate
+    db: Session, fornecedor_id: int, fornecedor: schema.FornecedorCreate
 ):
-    db_fornecedor = get_fornecedor(db, forcenedor_id)
+    db_fornecedor = get_fornecedor(db, fornecedor_id)
     if db_fornecedor:
         for key, value in fornecedor.model_dump().items():
             setattr(db_fornecedor, key, value)
@@ -35,8 +35,8 @@ def update_fornecedor(
     return db_fornecedor
 
 
-def delete_fornecedor(db: Session, forcenedor_id: int):
-    db_fornecedor = get_fornecedor(db, forcenedor_id)
+def delete_fornecedor(db: Session, fornecedor_id: int):
+    db_fornecedor = get_fornecedor(db, fornecedor_id)
     if db_fornecedor:
         db.delete(db_fornecedor)
         db.commit()
