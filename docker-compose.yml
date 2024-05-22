@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: pharmacy_app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./pharmacy.db
+    volumes:
+      - ./src:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
